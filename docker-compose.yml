@@ -15,16 +15,18 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      target: install-dependencies
     container_name: nest-docker-postgres
     environment:
       - NODE_ENV=development
     ports:
       - '3000:3000'
+      - '9229:9229'
     depends_on:
       - db
+    command: yarn start:inspect
     volumes:
-      - ./src:/app/src
+      - ./src:/user/src/app/src
 
   pgadmin:
     image: dpage/pgadmin4

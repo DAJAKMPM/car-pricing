@@ -38,6 +38,7 @@ const getDatabaseConfig = () => {
         type: 'postgres',
         url: process.env.DATABASE_URL,
         migrationsRun: true,
+        synchronize: false,
         entities: ['**/*.entity.js'],
         ssl: {
           rejectUnauthorized: false,
