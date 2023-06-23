@@ -37,3 +37,6 @@ lerna-debug.log*
 # Postgres 
 pgdata
 pgadmin_data
+
+# Redis
+redis_data
