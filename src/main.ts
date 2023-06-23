@@ -1,12 +1,13 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
+import RedisStore from 'connect-redis';
 import * as session from 'express-session';
+import helmet from 'helmet';
 import * as passport from 'passport';
 import * as redis from 'redis';
-import RedisStore from 'connect-redis';
-import helmet from 'helmet';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<INestApplication>(AppModule);

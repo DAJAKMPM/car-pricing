@@ -7,14 +7,16 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from '../services/auth.service';
-import { AuthenticateUserDto } from '../dto/authenticate-user.dto';
-import { LocalAuthGuard } from '../guards/local.guard';
 import { Request, Response } from 'express';
+import { noop } from 'lodash';
+
 import { Serialize } from '@/interceptors/serialize.interceptor';
 import { UserDto } from '@/users/dto/user.dto';
+
+import { AuthenticateUserDto } from '../dto/authenticate-user.dto';
 import { AuthenticatedGuard } from '../guards/authenticated.guard';
-import { noop } from 'lodash';
+import { LocalAuthGuard } from '../guards/local.guard';
+import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
 export class AuthController {

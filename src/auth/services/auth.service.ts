@@ -1,10 +1,11 @@
-import { UsersService } from '@/users/services/users.service';
 import {
   BadRequestException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
 import * as argon2 from 'argon2';
+
+import { UsersService } from '@/users/services/users.service';
 
 @Injectable()
 export class AuthService {

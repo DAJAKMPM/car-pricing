@@ -8,11 +8,13 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { UsersService } from '../services/users.service';
-import { UpdateUserDto } from '../dto/update-user.dto';
+
 import { Serialize } from '@/interceptors/serialize.interceptor';
-import { UserDto } from '../dto/user.dto';
+
 import { CreateUserDto } from '../dto/create-user.dto';
+import { UpdateUserDto } from '../dto/update-user.dto';
+import { UserDto } from '../dto/user.dto';
+import { UsersService } from '../services/users.service';
 
 @Controller('users')
 @Serialize(UserDto)
