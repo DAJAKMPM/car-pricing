@@ -25,7 +25,7 @@ export class UsersService {
     return user;
   }
 
-  async find(email: string) {
+  async find(email?: string) {
     return await this.usersRepository.find({ where: { email } });
   }
 

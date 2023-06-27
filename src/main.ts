@@ -1,22 +1,37 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  INestApplication,
+  LogLevel,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import RedisStore from 'connect-redis';
 import * as session from 'express-session';
 import helmet from 'helmet';
 import * as passport from 'passport';
 import * as redis from 'redis';
 
+import { RequestLoggerInterceptor } from './interceptors/logger.interceptor';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<INestApplication>(AppModule);
+
   const configService = app.get(ConfigService);
   const port = configService.get('PORT');
   const environment = configService.get('NODE_ENV');
   const redisURI = configService.get('REDIS_URI');
   const redisPrefix = configService.get('REDIS_PREFIX');
   const secret = configService.get('APP_SECRET');
+
+  const isProduction = environment === 'production';
+
+  const logLevels: LogLevel[] = isProduction
+    ? ['error', 'warn', 'log']
+    : ['error', 'warn', 'log', 'verbose', 'debug'];
+
+  app.useLogger(logLevels);
 
   const client = redis.createClient({ url: redisURI });
 
@@ -37,6 +52,18 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
+      transform: true,
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
+
+  app.useGlobalInterceptors(
+    new RequestLoggerInterceptor(),
+    new ClassSerializerInterceptor(app.get(Reflector), {
+      excludeExtraneousValues: true,
+      enableImplicitConversion: true,
     }),
   );
 
@@ -50,7 +77,7 @@ async function bootstrap() {
         httpOnly: true,
         sameSite: 'lax',
         maxAge: 3600000 * 24 * 14,
-        secure: environment === 'production',
+        secure: isProduction,
       },
     }),
   );

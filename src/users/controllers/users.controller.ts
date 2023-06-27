@@ -7,8 +7,12 @@ import {
   Patch,
   Post,
   Query,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 
+import { AuthenticatedGuard } from '@/auth/guards/authenticated.guard';
 import { Serialize } from '@/interceptors/serialize.interceptor';
 
 import { CreateUserDto } from '../dto/create-user.dto';
@@ -23,26 +27,37 @@ export class UsersController {
 
   constructor(private readonly usersService: UsersService) {}
 
+  @UseGuards(AuthenticatedGuard)
+  @Get('me')
+  async me(@Req() req: Request): Promise<Express.User> {
+    return req.user;
+  }
+
+  @UseGuards(AuthenticatedGuard)
   @Post()
   async createUser(@Body() body: CreateUserDto) {
     return await this.usersService.create(body.email, this.DEFAULT_PASSWORD);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get()
   async findAllUsers(@Query('email') email: string) {
     return await this.usersService.find(email);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Get('/:id')
   async findUser(@Param('id') id: string) {
     return await this.usersService.findOne(+id);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Patch('/:id')
   async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
     return await this.usersService.update(+id, body);
   }
 
+  @UseGuards(AuthenticatedGuard)
   @Delete('/:id')
   async removeUser(@Param('id') id: string) {
     return await this.usersService.remove(+id);

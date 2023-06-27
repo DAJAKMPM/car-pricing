@@ -8,7 +8,9 @@ import { AuthenticateUserDto } from '../dto/authenticate-user.dto';
 @Injectable()
 export class SessionSerializer extends PassportSerializer {
   serializeUser(user: User, done: CallableFunction) {
-    done(null, user.id);
+    const mappedUser = { id: user.id, email: user.email };
+
+    done(null, mappedUser);
   }
 
   deserializeUser(payload: AuthenticateUserDto, done: CallableFunction) {
