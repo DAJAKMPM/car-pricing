@@ -27,7 +27,12 @@ export class AuthController {
   async register(@Body() body: AuthenticateUserDto, @Req() req: Request) {
     const user = await this.authService.signup(body.email, body.password);
 
-    req.logIn(user, noop);
+    await new Promise((resolve, reject) => {
+      req.logIn(user, (err) => {
+        if (err) reject(err);
+        else resolve(user);
+      });
+    });
 
     return user;
   }

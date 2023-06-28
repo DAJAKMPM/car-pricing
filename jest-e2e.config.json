@@ -6,13 +6,14 @@
     "^.+\\.(t|j)s$": [
       "ts-jest",
       {
-        "tsconfig": "tsconfig.test.json"
+        "tsconfig": "tsconfig.json"
       }
     ]
   },
   "collectCoverageFrom": ["**/*.(t|j)s"],
   "moduleNameMapper": {
-    "^@/(.*)$": "<rootDir>/src/$1"
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@test/(.*)$": "<rootDir>/test/$1"
   },
   "coverageDirectory": "./coverage",
   "testEnvironment": "node"

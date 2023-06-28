@@ -17,15 +17,17 @@ describe('AuthController', () => {
     password: 'password',
   };
 
-  const mockRequest = {
-    logIn: jest.fn(),
+  const mockRequest: Partial<Request> = {
+    logIn: jest.fn((_user: User, done: (err: any) => void) => {
+      done(null);
+    }) as jest.Mock,
     logOut: jest.fn(),
     user: mockUser,
-  } as Partial<Request>;
+  };
 
-  const mockResponse = {
+  const mockResponse: Partial<Response> = {
     send: jest.fn(),
-  } as Partial<Response>;
+  };
 
   const mockAuthService: jest.Mocked<Partial<AuthService>> = {
     signup: jest.fn(),
