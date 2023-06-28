@@ -3,15 +3,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import type { FindOptionsWhere, Repository } from 'typeorm';
 
-import { User } from '../entities/user.entity';
-
-import { UsersService } from './users.service';
+import { User } from '@/modules/users/entities/user.entity';
+import { UsersService } from '@/modules/users/users.service';
 
 describe('UsersService', () => {
   let service: UsersService;
   let userRepository: jest.Mocked<Repository<User>>;
 
-  const mockUserRepository: Partial<Repository<User>> = {
+  const mockUserRepository: jest.Mocked<Partial<Repository<User>>> = {
     create: jest.fn(),
     save: jest.fn(),
     findOneBy: jest.fn(),

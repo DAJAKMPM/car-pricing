@@ -27,8 +27,12 @@ const getDatabaseConfig = () => {
       break;
     case 'test':
       Object.assign(dbConfig, {
-        type: 'sqlite',
-        database: 'test.sqlite',
+        type: 'postgres',
+        host: env.TEST_DB_HOST,
+        port: +env.TEST_DB_PORT || 5432,
+        username: env.TEST_DB_USER,
+        password: env.TEST_DB_PASSWORD,
+        database: env.TEST_DB_DATABASE,
         entities: ['**/*.entity.ts'],
         migrationsRun: true,
       });

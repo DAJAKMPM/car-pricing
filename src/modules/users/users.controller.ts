@@ -12,13 +12,13 @@ import {
 } from '@nestjs/common';
 import { Request } from 'express';
 
-import { AuthenticatedGuard } from '@/auth/guards/authenticated.guard';
 import { Serialize } from '@/interceptors/serialize.interceptor';
+import { AuthenticatedGuard } from '@/modules/auth/guards/authenticated.guard';
 
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
-import { UserDto } from '../dto/user.dto';
-import { UsersService } from '../services/users.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserDto } from './dto/user.dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 @Serialize(UserDto)

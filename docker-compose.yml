@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.7"
 
 services:
   db:
@@ -13,6 +13,20 @@ services:
       - '5432:5432'
     networks: 
       - app-net
+      
+  test-db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=test
+    container_name: postgres-test
+    volumes:
+      - ./pgdata_test:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks: 
+      - app-net
 
   sessions:
     image: redis:6.2-alpine
@@ -23,24 +37,24 @@ services:
     networks: 
       - app-net
 
-  app:
-    build:
-      context: .
-      target: install-dependencies
-    container_name: nest-docker-postgres
-    environment:
-      - NODE_ENV=development
-    ports:
-      - '3000:3000'
-      - '9229:9229'
-    depends_on:
-      - db
-      - sessions
-    command: yarn start:inspect
-    volumes:
-      - ./src:/user/src/app/src
-    networks: 
-      - app-net
+  # app:
+  #   build:
+  #     context: .
+  #     target: install-dependencies
+  #   container_name: nest-docker-postgres
+  #   environment:
+  #     - NODE_ENV=development
+  #   ports:
+  #     - '3000:3000'
+  #     - '9229:9229'
+  #   depends_on:
+  #     - db
+  #     - sessions
+  #   command: yarn start:inspect
+  #   volumes:
+  #     - ./src:/user/src/app/src
+  #   networks: 
+  #     - app-net
 
   pgadmin:
     image: dpage/pgadmin4

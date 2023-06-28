@@ -2,10 +2,9 @@ import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as argon2 from 'argon2';
 
-import { User } from '@/users/entities/user.entity';
-import { UsersService } from '@/users/services/users.service';
-
-import { AuthService } from './auth.service';
+import { AuthService } from '@/modules/auth/auth.service';
+import { User } from '@/modules/users/entities/user.entity';
+import { UsersService } from '@/modules/users/users.service';
 
 describe('AuthService', () => {
   let authService: AuthService;
