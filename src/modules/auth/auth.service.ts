@@ -28,9 +28,7 @@ export class AuthService {
 
     if (users.length) throw new BadRequestException('Email is in use!');
 
-    const hashedPassword = await argon2.hash(password);
-
-    const newUser = await this.usersService.create(email, hashedPassword);
+    const newUser = await this.usersService.create(email, password);
 
     return newUser;
   }

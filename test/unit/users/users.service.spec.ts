@@ -1,6 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import * as argon2 from 'argon2';
 import type { FindOptionsWhere, Repository } from 'typeorm';
 
 import { User } from '@/modules/users/entities/user.entity';
@@ -44,14 +45,19 @@ describe('UsersService', () => {
         password: 'password',
       };
 
-      userRepository.create.mockReturnValue(user as User);
-      userRepository.save.mockResolvedValueOnce(user as User);
+      const hashedUser: Partial<User> = {
+        email: user.email,
+        password: await argon2.hash(user.password),
+      };
+
+      userRepository.create.mockReturnValue(hashedUser as User);
+      userRepository.save.mockResolvedValueOnce(hashedUser as User);
 
       const result = await service.create(user.email, user.password);
 
-      expect(result).toEqual(user);
-      expect(userRepository.create).toHaveBeenCalledWith(user);
-      expect(userRepository.save).toHaveBeenCalledWith(user);
+      expect(result).toEqual(hashedUser);
+      expect(userRepository.create).toHaveBeenCalled();
+      expect(userRepository.save).toHaveBeenCalled();
     });
   });
 

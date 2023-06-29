@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as argon2 from 'argon2';
 import { Repository } from 'typeorm';
 
 import { User } from './entities/user.entity';
@@ -12,7 +13,12 @@ export class UsersService {
   ) {}
 
   async create(email: string, password: string): Promise<User> {
-    const user = this.usersRepository.create({ email, password });
+    const hashedPassword = await argon2.hash(password);
+
+    const user = this.usersRepository.create({
+      email,
+      password: hashedPassword,
+    });
 
     return await this.usersRepository.save(user);
   }

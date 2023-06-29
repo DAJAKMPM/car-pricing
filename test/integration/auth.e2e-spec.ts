@@ -1,7 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TestDatabaseManagementService } from '@test/utils/setup';
-import * as argon2 from 'argon2';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import * as request from 'supertest';
@@ -52,8 +51,7 @@ describe('AuthController (e2e)', () => {
   });
 
   it('/signup - Email is in use!', async () => {
-    const hashedPassword = await argon2.hash('demo123');
-    await usersService.create('tests@test.com', hashedPassword);
+    await usersService.create('tests@test.com', 'demo123');
 
     return request(app.getHttpServer())
       .post('/auth/signup')
@@ -67,8 +65,7 @@ describe('AuthController (e2e)', () => {
   });
 
   it('/signin - Success', async () => {
-    const hashedPassword = await argon2.hash('demo123');
-    await usersService.create('tests@test.com', hashedPassword);
+    await usersService.create('tests@test.com', 'demo123');
 
     return request(app.getHttpServer())
       .post('/auth/signin')
@@ -77,8 +74,7 @@ describe('AuthController (e2e)', () => {
   });
 
   it('/signin - User not found!', async () => {
-    const hashedPassword = await argon2.hash('demo123');
-    await usersService.create('tests@test.com', hashedPassword);
+    await usersService.create('tests@test.com', 'demo123');
 
     return request(app.getHttpServer())
       .post('/auth/signin')
@@ -92,8 +88,7 @@ describe('AuthController (e2e)', () => {
   });
 
   it('/signin - Invalid Credentials!', async () => {
-    const hashedPassword = await argon2.hash('demo123');
-    await usersService.create('tests@test.com', hashedPassword);
+    await usersService.create('tests@test.com', 'demo123');
 
     return request(app.getHttpServer())
       .post('/auth/signin')

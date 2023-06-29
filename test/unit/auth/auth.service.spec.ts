@@ -45,7 +45,7 @@ describe('AuthService', () => {
     it('should throw NotFoundException if user is not found', async () => {
       const user: Partial<User> = {
         email: 'incorrect@test.com',
-        password: await argon2.hash('incorrect'),
+        password: 'incorrect',
       };
 
       mockUsersService.find.mockResolvedValue([]);

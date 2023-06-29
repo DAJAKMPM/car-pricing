@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { CanActivate, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 
 @Injectable()
@@ -12,5 +12,11 @@ export class TestDatabaseManagementService {
       const repository = this.connection.getRepository(entity.name);
       await repository.clear();
     }
+  }
+}
+
+export class MockAuthenticatedGuard implements CanActivate {
+  canActivate() {
+    return true;
   }
 }
