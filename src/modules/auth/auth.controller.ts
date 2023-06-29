@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Post,
   Req,
   Res,
@@ -41,6 +42,12 @@ export class AuthController {
   @Serialize(UserDto)
   @Post('/signin')
   async login(@Req() req: Request) {
+    return req.user;
+  }
+
+  @UseGuards(AuthenticatedGuard)
+  @Get('me')
+  async me(@Req() req: Request): Promise<Express.User> {
     return req.user;
   }
 

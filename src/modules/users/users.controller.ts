@@ -7,10 +7,8 @@ import {
   Patch,
   Post,
   Query,
-  Req,
   UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
 
 import { Serialize } from '@/interceptors/serialize.interceptor';
 import { AuthenticatedGuard } from '@/modules/auth/guards/authenticated.guard';
@@ -26,12 +24,6 @@ export class UsersController {
   private readonly DEFAULT_PASSWORD: string = '123456';
 
   constructor(private readonly usersService: UsersService) {}
-
-  @UseGuards(AuthenticatedGuard)
-  @Get('me')
-  async me(@Req() req: Request): Promise<Express.User> {
-    return req.user;
-  }
 
   @UseGuards(AuthenticatedGuard)
   @Post()
