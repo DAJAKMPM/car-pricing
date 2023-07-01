@@ -35,6 +35,8 @@ describe('AuthController (e2e)', () => {
 
     testDbManagementService = moduleFixture.get(TestDatabaseManagementService);
     usersService = moduleFixture.get(UsersService);
+
+    await testDbManagementService.clearDatabase();
   });
 
   afterEach(async () => {

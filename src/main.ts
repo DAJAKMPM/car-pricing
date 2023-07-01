@@ -1,4 +1,4 @@
-import { INestApplication, LogLevel, ValidationPipe } from '@nestjs/common';
+import { INestApplication, LogLevel } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import RedisStore from 'connect-redis';
@@ -43,16 +43,6 @@ async function bootstrap() {
   });
 
   app.use(helmet());
-
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
 
   app.useGlobalInterceptors(new RequestLoggerInterceptor());
 

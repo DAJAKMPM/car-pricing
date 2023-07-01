@@ -44,6 +44,8 @@ describe('UsersController (e2e)', () => {
     testDbManagementService = moduleFixture.get(TestDatabaseManagementService);
     usersService = moduleFixture.get(UsersService);
 
+    await testDbManagementService.clearDatabase();
+
     const newUser = await usersService.create('random@test.com', 'password');
     createdUserId = newUser.id;
   });

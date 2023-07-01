@@ -41,3 +41,6 @@ pgdata_test
 
 # Redis
 redis_data
+
+# Testing
+test.sqlite
