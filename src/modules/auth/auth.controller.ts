@@ -47,7 +47,7 @@ export class AuthController {
 
   @UseGuards(AuthenticatedGuard)
   @Get('me')
-  async me(@Req() req: Request): Promise<Express.User> {
+  async me(@Req() req: Request) {
     return req.user;
   }
 

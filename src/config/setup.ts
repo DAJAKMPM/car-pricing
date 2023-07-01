@@ -40,8 +40,11 @@ const getDatabaseConfig = () => {
     case 'production':
       Object.assign(dbConfig, {
         type: 'postgres',
-        url: process.env.DATABASE_URL,
-        migrationsRun: true,
+        host: env.DB_HOST,
+        port: +env.DB_PORT || 5432,
+        username: env.DB_USER,
+        password: env.DB_PASSWORD,
+        database: env.DB_DATABASE,
         synchronize: false,
         entities: ['**/*.entity.js'],
         ssl: {

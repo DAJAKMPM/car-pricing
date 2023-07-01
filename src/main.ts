@@ -1,11 +1,6 @@
-import {
-  ClassSerializerInterceptor,
-  INestApplication,
-  LogLevel,
-  ValidationPipe,
-} from '@nestjs/common';
+import { INestApplication, LogLevel, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import RedisStore from 'connect-redis';
 import * as session from 'express-session';
 import helmet from 'helmet';
@@ -59,13 +54,7 @@ async function bootstrap() {
     }),
   );
 
-  app.useGlobalInterceptors(
-    new RequestLoggerInterceptor(),
-    new ClassSerializerInterceptor(app.get(Reflector), {
-      excludeExtraneousValues: true,
-      enableImplicitConversion: true,
-    }),
-  );
+  app.useGlobalInterceptors(new RequestLoggerInterceptor());
 
   app.use(
     session({
