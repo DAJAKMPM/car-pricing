@@ -13,9 +13,9 @@ import {
 import { Serialize } from '@/interceptors/serialize.interceptor';
 import { AuthenticatedGuard } from '@/modules/auth/guards/authenticated.guard';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { UserDto } from './dto/user.dto';
+import { CreateUserDto } from './dto/request/create-user.dto';
+import { UpdateUserDto } from './dto/request/update-user.dto';
+import { UserDto } from './dto/response/user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')

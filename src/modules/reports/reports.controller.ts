@@ -16,10 +16,10 @@ import { Serialize } from '@/interceptors/serialize.interceptor';
 import { AdminGuard } from '../auth/guards/admin.guard';
 import { AuthenticatedGuard } from '../auth/guards/authenticated.guard';
 
-import { ApproveReportDto } from './dto/approve-report.dto';
-import { CreateReportDto } from './dto/create-report.dto';
-import { GetEstimateDto } from './dto/get-estimate.dto';
-import { ReportDto } from './dto/report.dto';
+import { ApproveReportDto } from './dto/request/approve-report.dto';
+import { CreateReportDto } from './dto/request/create-report.dto';
+import { GetEstimateDto } from './dto/request/get-estimate.dto';
+import { ReportDto } from './dto/response/report.dto';
 import { ReportsService } from './reports.service';
 
 @Controller('reports')

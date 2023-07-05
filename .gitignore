@@ -44,3 +44,7 @@ redis_data
 
 # Testing
 test.sqlite
+
+# Environment Variables
+.env
+.env.docker

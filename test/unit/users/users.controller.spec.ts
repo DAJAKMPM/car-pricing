@@ -3,8 +3,8 @@ import { APP_GUARD } from '@nestjs/core';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AuthenticatedGuard } from '@/modules/auth/guards/authenticated.guard';
-import { CreateUserDto } from '@/modules/users/dto/create-user.dto';
-import { UpdateUserDto } from '@/modules/users/dto/update-user.dto';
+import { CreateUserDto } from '@/modules/users/dto/request/create-user.dto';
+import { UpdateUserDto } from '@/modules/users/dto/request/update-user.dto';
 import { User } from '@/modules/users/entities/user.entity';
 import { UsersController } from '@/modules/users/users.controller';
 import { UsersService } from '@/modules/users/users.service';

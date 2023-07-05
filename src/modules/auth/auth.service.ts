@@ -9,7 +9,7 @@ import { UsersService } from '@/modules/users/users.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   async validateUser(email: string, password: string) {
     const [user] = await this.usersService.find(email);

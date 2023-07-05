@@ -15,6 +15,7 @@ describe('AuthController', () => {
   const mockUser = {
     email: 'test@test.com',
     password: 'password',
+    admin: true,
   };
 
   const mockRequest: Partial<Request> = {
@@ -22,7 +23,7 @@ describe('AuthController', () => {
       done(null);
     }) as jest.Mock,
     logOut: jest.fn(),
-    user: mockUser,
+    user: mockUser as User,
   };
 
   const mockResponse: Partial<Response> = {

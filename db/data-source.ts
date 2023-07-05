@@ -1,5 +1,4 @@
 import * as dotenv from 'dotenv';
-import * as process from 'process';
 import { DataSource, DataSourceOptions } from 'typeorm';
 
 const env = process.env;
@@ -13,8 +12,8 @@ export const dataSourceOptions: DataSourceOptions = {
   username: env.DB_USER,
   password: env.DB_PASSWORD,
   database: env.DB_DATABASE,
-  entities: ['dist/**/*.entity.js'],
-  migrations: ['dist/db/migrations/*.js'],
+  entities: ['dist/**/**/*.entity.js'],
+  migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
 };
 
 const dataSource = new DataSource(dataSourceOptions);

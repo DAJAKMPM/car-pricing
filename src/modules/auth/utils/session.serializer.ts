@@ -3,7 +3,7 @@ import { PassportSerializer } from '@nestjs/passport';
 
 import { User } from '@/modules/users/entities/user.entity';
 
-import { AuthenticateUserDto } from '../dto/authenticate-user.dto';
+import { AuthenticateUserDto } from '../dto/request/authenticate-user.dto';
 
 @Injectable()
 export class SessionSerializer extends PassportSerializer {

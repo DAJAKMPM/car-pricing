@@ -4,14 +4,15 @@ import { Repository } from 'typeorm';
 
 import { User } from '../users/entities/user.entity';
 
-import { CreateReportDto } from './dto/create-report.dto';
-import { GetEstimateDto } from './dto/get-estimate.dto';
+import { CreateReportDto } from './dto/request/create-report.dto';
+import { GetEstimateDto } from './dto/request/get-estimate.dto';
 import { Report } from './entities/report.entity';
 
 @Injectable()
 export class ReportsService {
   constructor(
-    @InjectRepository(Report) private reportsRepository: Repository<Report>,
+    @InjectRepository(Report)
+    private readonly reportsRepository: Repository<Report>,
   ) {}
 
   async create(reportDto: CreateReportDto, user: User) {

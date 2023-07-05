@@ -5,7 +5,7 @@ const env = process.env;
 
 const getDatabaseConfig = () => {
   const dbConfig = {
-    synchronize: true,
+    synchronize: false,
     migrations: ['migrations/*.js'],
     cli: {
       migrationsDir: 'migrations',
@@ -31,13 +31,13 @@ const getDatabaseConfig = () => {
         database: 'test.sqlite',
         entities: ['**/*.entity.ts'],
         migrationsRun: true,
+        synchronize: true,
       });
       break;
     case 'production':
       Object.assign(dbConfig, {
         type: 'postgres',
-        url: process.env.DATABASE_URL,
-        synchronize: false,
+        url: process.env.DB_URL,
         entities: ['**/*.entity.js'],
         ssl: {
           rejectUnauthorized: false,

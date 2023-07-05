@@ -9,5 +9,6 @@ import { ReportsService } from './reports.service';
   imports: [TypeOrmModule.forFeature([Report])],
   controllers: [ReportsController],
   providers: [ReportsService],
+  exports: [TypeOrmModule, ReportsService],
 })
 export class ReportsModule {}

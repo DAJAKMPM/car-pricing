@@ -71,3 +71,99 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Relationship reference
+
+```
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { Meeting } from '../meetings/entities/meeting.entity';
+import { Task } from '../tasks/entities/task.entity';
+
+import { ContactInfo } from './entities/contact-info.entity';
+import { Employee } from './entities/employee.entity';
+
+@Injectable()
+export class EmployeesService {
+  constructor(
+    @InjectRepository(Employee)
+    private readonly employeeRepository: Repository<Employee>,
+    @InjectRepository(ContactInfo)
+    private readonly contactInfoRepository: Repository<ContactInfo>,
+    @InjectRepository(Task)
+    private readonly taskRepository: Repository<Task>,
+    @InjectRepository(Meeting)
+    private readonly meetingRepository: Repository<Meeting>,
+  ) {}
+
+  async seed() {
+    // emplyoee 1 CEO
+    const ceo = this.employeeRepository.create({ name: 'MR. CEO' });
+    
+    await this.employeeRepository.save(ceo);
+
+    const contactInfo = this.contactInfoRepository.create({
+      email: 'ceo@gmail.com',
+    });
+
+    contactInfo.employee = ceo;
+    await this.contactInfoRepository.save(contactInfo);
+
+    // employee 2 Manager
+    const manager = this.employeeRepository.create({
+      name: 'Dann',
+      manager: ceo,
+    });
+
+    const task1 = this.taskRepository.create({ name: 'Hire People' });
+    await this.taskRepository.save(task1);
+
+    const task2 = this.taskRepository.create({ name: 'Present to CEO' });
+    await this.taskRepository.save(task2);
+
+    manager.tasks = [task1, task2];
+
+    const meeting1 = this.meetingRepository.create({ zoomUrl: 'meeting.com' });
+    meeting1.attendees = [ceo];
+    await this.meetingRepository.save(meeting1);
+
+    manager.meetings = [meeting1];
+
+    await this.employeeRepository.save(manager);
+  }
+
+  async getEmployeeById(id: number) {
+    // return await this.employeeRepository.findOne({
+    //   where: { id },
+    //   relations: [
+    //     'manager',
+    //     'directReports',
+    //     'tasks',
+    //     'contactInfo',
+    //     'meetings',
+    //   ],
+    // });
+
+    //Alternative custom query
+    return this.employeeRepository
+      .createQueryBuilder('employee')
+      .leftJoinAndSelect('employee.directReports', 'directReports')
+      .leftJoinAndSelect('employee.meetings', 'meetings')
+      .leftJoinAndSelect('employee.tasks', 'tasks')
+      .leftJoinAndSelect('employee.contactInfo', 'contactInfo')
+      .leftJoinAndSelect('employee.manager', 'manager')
+      .where('employee.id = :employeeId', { employeeId: id })
+      .getOne();
+  }
+
+  async deleteEmployee(id: number) {
+    return this.employeeRepository.delete(id);
+  }
+}
+```
+## Migrations
+```
+yarn migration:generate db/migrations/initial-schema 
+```

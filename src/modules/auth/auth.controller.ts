@@ -12,9 +12,9 @@ import { Request, Response } from 'express';
 import { noop } from 'lodash';
 
 import { Serialize } from '@/interceptors/serialize.interceptor';
-import { UserDto } from '@/modules/users/dto/user.dto';
+import { UserDto } from '@/modules/users/dto/response/user.dto';
 
-import { AuthenticateUserDto } from './dto/authenticate-user.dto';
+import { AuthenticateUserDto } from './dto/request/authenticate-user.dto';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { LocalAuthGuard } from './guards/local.guard';
 import { AuthService } from './auth.service';
